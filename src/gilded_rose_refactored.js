@@ -44,18 +44,20 @@ class Shop {
           if (item.sellIn <= 5) {
             this.updateSingleQuality(item, 1);
           }
-          this.addDay(item);
-          return item
-        } else 
-        if (item.isAgedBrie()) {
-          // if 
-          
-          
-          this.addDay(item);
-          return item
+        }
+      } else 
+      if (this.isAgedBrie(item)) {
+        this.updateSingleQuality(item, 1)
+        if (item.sellIn <= 0) {
+          this.updateSingleQuality(item, 1)
         }
       }
+       
+      this.addDay(item);
+      return item
     })
+
+
     return this.items
     
   }

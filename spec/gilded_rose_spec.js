@@ -23,6 +23,7 @@ describe("Gilded Rose", function() {
     const gildedRose = new Shop([ new Item("Backstage passes to a TAFKAL80ETC concert", 4, 40) ]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toEqual(43)
+    expect(items[0].sellIn).toEqual(3)
   })
 
   it('when sellIn < 0 Backstage pass quality is 0', function() {
@@ -41,6 +42,7 @@ describe("Gilded Rose", function() {
     const gildedRose = new Shop([ new Item("Aged Brie", 0, 40) ]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toEqual(42)
+    expect(items[0].sellIn).toEqual(-1)
   })
 });
 // backstage pass goes up by 2 when sellin <= 10, 3 when <= 5
