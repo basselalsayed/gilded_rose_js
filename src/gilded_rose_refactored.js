@@ -7,17 +7,34 @@ class Item {
 }
 
 class Shop {
-  constructor(items=[]){
+  constructor(items=[]) {
     this.items = items;
   }
   isSulfuras(item) {
     return (item.name === 'Sulfuras, Hand of Ragnaros')
   }
   isBackstagePass(item) {
-    return (item.name === 'Backstage passes to a TAFKAL80ETC concert')
+    return (item.name === 'Backstage passes to a TAFKAL80ETC concert') 
+  }
+  updateBackstagePass(item) {
+    if (item.sellIn <= 10) {
+      this.updateSpecialQuality(item, 2);
+      if (item.sellIn < 0) {
+        return item.quality = 0
+      } else
+      if (item.sellIn <= 5) {
+        this.updateSpecialQuality(item, 1);
+      }
+    }
   }
   isAgedBrie(item) {
     return (item.name === 'Aged Brie')
+  }
+  updateAgedBrie(item) {
+    this.updateSpecialQuality(item, 1)
+    if (item.sellIn <= 0) {
+      this.updateSpecialQuality(item, 1)
+    }
   }
   updateSpecialQuality(item, q) {
     if (item.quality < 50) {
@@ -40,21 +57,10 @@ class Shop {
         item
       } else
       if (this.isBackstagePass(item)) {
-        if (item.sellIn <= 10) {
-          this.updateSpecialQuality(item, 2);
-          if (item.sellIn < 0) {
-            return item.quality = 0
-          } else
-          if (item.sellIn <= 5) {
-            this.updateSpecialQuality(item, 1);
-          }
-        }
+        this.updateBackstagePass(item)
       } else 
       if (this.isAgedBrie(item)) {
-        this.updateSpecialQuality(item, 1)
-        if (item.sellIn <= 0) {
-          this.updateSpecialQuality(item, 1)
-        }
+        this.updateAgedBrie(item)
       } 
       else {
         this.updateNormalQuality(item)
@@ -63,7 +69,6 @@ class Shop {
       return item
       
     })
-
 
     return this.items
     
