@@ -44,6 +44,12 @@ describe("Gilded Rose", function() {
     expect(items[0].quality).toEqual(42)
     expect(items[0].sellIn).toEqual(-1)
   })
+  it('reduces quality and sellin for a normal item', function() {
+    const gildedRose = new Shop([ new Item("Old Shoe", 5, 10) ]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toEqual(9)
+    expect(items[0].sellIn).toEqual(4)
+  })
 });
 // backstage pass goes up by 2 when sellin <= 10, 3 when <= 5
 // sulfuras quality does not decrease 
