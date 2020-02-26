@@ -16,34 +16,45 @@ class Shop {
   isBackstagePass(item) {
     return (item.name === 'Backstage passes to a TAFKAL80ETC concert') 
   }
-  updateBackstagePass(item) {
-    if (item.sellIn <= 10) {
-      this.updateSpecialQuality(item, 2);
-      if (item.sellIn < 0) {
-        return item.quality = 0
-      } else
-      if (item.sellIn <= 5) {
-        this.updateSpecialQuality(item, 1);
-      }
-    }
-  }
   isAgedBrie(item) {
     return (item.name === 'Aged Brie')
   }
-  updateAgedBrie(item) {
-    this.updateSpecialQuality(item, 1)
-    if (item.sellIn <= 0) {
-      this.updateSpecialQuality(item, 1)
-    }
+  isSpecial(item) {
+    return (this.isSulfuras(item) || this.isBackstagePass(item) || this.isAgedBrie(item) )
   }
-  updateSpecialQuality(item, q) {
+  updateSpecialProperty(item, q) {
     if (item.quality < 50) {
       return item.quality += q
     }
   }
-  updateNormalQuality(item) {
+  updateNormalProperty(item) {
     if (item.quality > 0) {
       return item.quality -= 1
+    }
+  }
+  updateBackstagePass(item) {
+    if (item.sellIn <= 10) {
+      this.updateSpecialProperty(item, 2);
+      if (item.sellIn < 0) {
+          return item.quality = 0
+      } else if (item.sellIn <= 5) {
+          this.updateSpecialProperty(item, 1);
+      }
+    }
+  }
+  updateAgedBrie(item) {
+    this.updateSpecialProperty(item, 1)
+    if (item.sellIn <= 0) {
+      this.updateSpecialProperty(item, 1)
+    }
+  }
+  updateSpecialItem(item) {
+      if (this.isSulfuras(item)) {
+        return item
+    } else if (this.isBackstagePass(item)) {
+        this.updateBackstagePass(item)
+    } else if (this.isAgedBrie(item)) {
+        this.updateAgedBrie(item)
     }
   }
   addDay(item) {
@@ -53,21 +64,13 @@ class Shop {
   }
   updateQuality() {
     this.items.forEach((item) => {
-      if (this.isSulfuras(item)) {
-        item
-      } else
-      if (this.isBackstagePass(item)) {
-        this.updateBackstagePass(item)
-      } else 
-      if (this.isAgedBrie(item)) {
-        this.updateAgedBrie(item)
-      } 
-      else {
-        this.updateNormalQuality(item)
+      if (this.isSpecial(item)) {
+          this.updateSpecialItem(item)
+      } else {
+          this.updateNormalProperty(item)
       }
       this.addDay(item);
       return item
-      
     })
 
     return this.items
