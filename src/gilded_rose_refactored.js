@@ -55,8 +55,9 @@ class Shop {
         if (item.sellIn <= 0) {
           this.updateSpecialQuality(item, 1)
         }
-      } else {
-
+      } 
+      else {
+        this.updateNormalQuality(item)
       }
       this.addDay(item);
       return item
