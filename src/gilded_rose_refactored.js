@@ -20,7 +20,7 @@ class Shop {
     return (item.name === 'Aged Brie')
   }
   isSpecial(item) {
-    return (this.isSulfuras(item) || this.isBackstagePass(item) || this.isAgedBrie(item) )
+    return (this.isBackstagePass(item) || this.isAgedBrie(item) )
   }
   updateSpecialProperty(item, q) {
     if ((item.quality + q) < 50) {
