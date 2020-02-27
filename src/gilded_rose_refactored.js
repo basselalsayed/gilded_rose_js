@@ -57,7 +57,7 @@ class Shop {
         this.updateAgedBrie(item)
     }
   }
-  update(item) {
+  updateAll(item) {
     if (this.isSulfuras(item)) {
       return item
     } 
@@ -76,7 +76,7 @@ class Shop {
   }
   updateQuality() {
     this.items.forEach((item) => {
-      this.update(item)
+      this.updateAll(item)
     })
 
     return this.items

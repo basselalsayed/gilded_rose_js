@@ -58,6 +58,3 @@ describe("Gilded Rose", function() {
     expect(items[0].sellIn).toEqual(4)
   })
 });
-// backstage pass goes up by 2 when sellin <= 10, 3 when <= 5
-// sulfuras quality does not decrease 
-// brie quality goes up 2 when sellin 0 or less
