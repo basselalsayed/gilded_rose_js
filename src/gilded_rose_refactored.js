@@ -23,11 +23,13 @@ class Shop {
     return (this.isSulfuras(item) || this.isBackstagePass(item) || this.isAgedBrie(item) )
   }
   updateSpecialProperty(item, q) {
-    if (item.quality < 50) {
+    if ((item.quality + q) < 50) {
       return item.quality += q
+    } else {
+      return item.quality = 50
     }
   }
-  updateNormalProperty(item) {
+  updateNormal(item) {
     if (item.quality > 0) {
       return item.quality -= 1
     }
@@ -48,14 +50,24 @@ class Shop {
       this.updateSpecialProperty(item, 1)
     }
   }
-  updateSpecialItem(item) {
-      if (this.isSulfuras(item)) {
-        return item
-    } else if (this.isBackstagePass(item)) {
+  updateSpecial(item) {
+    if (this.isBackstagePass(item)) {
         this.updateBackstagePass(item)
     } else if (this.isAgedBrie(item)) {
         this.updateAgedBrie(item)
     }
+  }
+  update(item) {
+    if (this.isSulfuras(item)) {
+      return item
+    } 
+    if (this.isSpecial(item)) {
+        this.updateSpecial(item)
+    } else {
+        this.updateNormal(item)
+    }
+    this.addDay(item);
+    return item
   }
   addDay(item) {
     if (item.quality < 50) {
@@ -64,13 +76,7 @@ class Shop {
   }
   updateQuality() {
     this.items.forEach((item) => {
-      if (this.isSpecial(item)) {
-          this.updateSpecialItem(item)
-      } else {
-          this.updateNormalProperty(item)
-      }
-      this.addDay(item);
-      return item
+      this.update(item)
     })
 
     return this.items
